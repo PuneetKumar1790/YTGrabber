@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YTGrabber - YouTube Video Downloader</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container styles */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #1e1e1e;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* Logo styles */
+        .logo {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaaaaa;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            background-color: #2b2b2b;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23aaaaaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #cc0000;
+        }
+
+        button:disabled {
+            background-color: #7a0000;
+            cursor: not-allowed;
+        }
+
+        /* Status message */
+        .status {
+            margin-top: 24px;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #2b2b2b;
+            color: #aaaaaa;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .status.success {
+            background-color: rgba(0, 128, 0, 0.2);
+            color: #4caf50;
+        }
+
+        .status.error {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ff5252;
+        }
+
+        .status.loading {
+            color: #ffffff;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            input,
+            select,
+            button {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Apr%2024%2C%202025%2C%2007_52_45%20AM-PVa3VtgYd3td2ARfMk5KUQg9HTXKtk.png"
+                alt="YTGrabber Logo">
+            <h1>YTGrabber</h1>
+        </div>
+
+        <div class="form-group">
+            <label for="youtube-url">YouTube Video URL</label>
+            <input type="text" id="youtube-url" placeholder="Paste YouTube URL here..." autocomplete="off">
+        </div>
+
+        <div class="form-group">
+            <label for="quality">Video Quality</label>
+            <select id="quality">
+                <option value="360p">360p</option>
+                <option value="480p">480p</option>
+                <option value="720p" selected>720p</option>
+                <option value="1080p">1080p</option>
+            </select>
+        </div>
+
+        <button id="download-btn">Download</button>
+
+        <div class="status" id="status-message">
+            Ready to download
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlInput = document.getElementById('youtube-url');
+            const qualitySelect = document.getElementById('quality');
+            const downloadBtn = document.getElementById('download-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            // Function to validate YouTube URL
+            function isValidYouTubeUrl(url) {
+                const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})(\S*)?$/;
+                return youtubeRegex.test(url);
+            }
+
+            // Function to update status message
+            function updateStatus(message, type = '') {
+                statusMessage.textContent = message;
+                statusMessage.className = 'status ' + type;
+            }
+
+            // Function to show loading state
+            function showLoading() {
+                downloadBtn.disabled = true;
+                statusMessage.innerHTML = '<div class="spinner"></div> Downloading...';
+                statusMessage.className = 'status loading';
+            }
+
+            // Function to handle download
+            async function handleDownload() {
+                const url = urlInput.value.trim();
+                const quality = qualitySelect.value;
+
+                // Validate URL
+                if (!isValidYouTubeUrl(url)) {
+                    updateStatus('Please enter a valid YouTube URL', 'error');
+                    return;
+                }
+
+                showLoading();
+
+                try {
+                    // Corrected endpoint URL
+                    const response = await fetch('http://localhost:3000/api/download', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ url, quality })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Download failed');
+                    }
+
+                    const data = await response.json();
+                    window.location.href = data.downloadUrl;
+                    updateStatus('Download started!', 'success');
+                } catch (error) {
+                    updateStatus(error.message || 'Something went wrong', 'error');
+                } finally {
+                    downloadBtn.disabled = false;
+                }
+            }
+
+            downloadBtn.addEventListener('click', handleDownload);
+        });
+    </script>
+</body>
+
+</html>
