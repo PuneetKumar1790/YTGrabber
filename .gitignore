@@ -7,3 +7,4 @@ ytgrabber-backend/downloads/
 ytgrabber-backend/ffmpeg-*/
 ytgrabber-backend/yt-dlp.exe
 downloads/
+ytgrabber-backend/downloads/node_modules
