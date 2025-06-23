@@ -156,6 +156,3 @@ YT-Grabber/
 If this saved your time and bandwidth, please star the repo:
 
 https://github.com/PuneetKumar1790/YTGrabber
-
-Access the app at:  
-http://localhost:3000
