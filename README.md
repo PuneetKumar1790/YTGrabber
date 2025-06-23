@@ -38,7 +38,7 @@ GitHub Repo: https://github.com/PuneetKumar1790/YTGrabber
 1. Clone the Repository
 
 git clone https://github.com/PuneetKumar1790/YTGrabber.git  
-cd YT-Grabber
+cd YTGrabber
 
 2. Install Dependencies
 
