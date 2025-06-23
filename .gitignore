@@ -1,0 +1,9 @@
+node_modules/
+downloads/
+*.log
+.env
+.DS_Store
+ytgrabber-backend/downloads/
+ytgrabber-backend/ffmpeg-*/
+ytgrabber-backend/yt-dlp.exe
+downloads/
